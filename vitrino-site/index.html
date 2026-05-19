@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vitrino — Presença digital para negócios locais.</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --terra: #C65A3A; --terra-dark: #A84830; --terra-light: #F2E4DC;
+    --teal: #6FA7A2; --teal-dark: #4F8A85; --teal-light: #E0EEEC;
+    --sand: #F3EEE7; --sand-dark: #E8DFD3;
+    --graphite: #2B2B2B; --bege: #D8D1C8;
+    --offwhite: #FAF7F3; --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Manrope', sans-serif; background: var(--offwhite); color: var(--graphite); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 5%; background: rgba(250,247,243,0.93);
+    backdrop-filter: blur(12px); border-bottom: 1px solid rgba(198,90,58,0.1);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo-text { font-size: 1.2rem; font-weight: 800; color: var(--graphite); letter-spacing: -0.03em; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--graphite); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.6; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta { background: var(--terra) !important; color: var(--white) !important; opacity: 1 !important; padding: 0.5rem 1.15rem !important; border-radius: 100px; font-weight: 700 !important; text-transform: none !important; letter-spacing: 0 !important; font-size: 0.83rem !important; }
+  .nav-cta:hover { background: var(--terra-dark) !important; }
+
+  /* HERO */
+  #inicio { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 8rem 5% 5rem; position: relative; overflow: hidden; }
+  .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; direction: ltr; }
+  .hero-logo-side { display: flex; align-items: center; justify-content: center; }
+  .hero-logo-img { width: 100%; max-width: 400px; height: auto; object-fit: contain; animation: fadeUp 0.6s 0.05s ease both; filter: drop-shadow(0 20px 60px rgba(198,90,58,0.15)); }
+  .hero-content-side { display: flex; flex-direction: column; }
+  .hero-blob1 { position: absolute; top: -10%; right: -8%; width: 55vw; height: 55vw; max-width: 700px; max-height: 700px; background: radial-gradient(circle, rgba(111,167,162,0.16) 0%, transparent 68%); border-radius: 50%; pointer-events: none; }
+  .hero-blob2 { position: absolute; bottom: -5%; left: -5%; width: 35vw; height: 35vw; max-width: 450px; max-height: 450px; background: radial-gradient(circle, rgba(198,90,58,0.09) 0%, transparent 68%); border-radius: 50%; pointer-events: none; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-light); color: var(--teal-dark); padding: 0.38rem 1rem; border-radius: 100px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.75rem; animation: fadeUp 0.6s ease both; }
+  .hero-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.3);} }
+  .hero-title { font-size: clamp(2.8rem, 6vw, 5.2rem); font-weight: 800; line-height: 1.06; letter-spacing: -0.04em; color: var(--graphite); max-width: 760px; animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-title span { color: var(--terra); }
+  .hero-bio { font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 600; color: var(--terra); margin-bottom: 0.75rem; letter-spacing: -0.01em; animation: fadeUp 0.6s 0.15s ease both; }
+  .hero-sub { font-size: clamp(1rem, 1.7vw, 1.12rem); font-weight: 400; color: #6B6057; max-width: 530px; line-height: 1.82; margin: 1.5rem 0 2.5rem; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn-p { background: var(--terra); color: var(--white); padding: 0.9rem 2rem; border-radius: 100px; font-size: 0.93rem; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 24px rgba(198,90,58,0.28); font-family: 'Manrope', sans-serif; }
+  .btn-p:hover { background: var(--terra-dark); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(198,90,58,0.38); }
+  .btn-s { color: var(--graphite); font-size: 0.88rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; opacity: 0.65; transition: opacity 0.2s; }
+  .btn-s:hover { opacity: 1; }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 4rem; animation: fadeUp 0.6s 0.4s ease both; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-n { font-size: 1.55rem; font-weight: 800; color: var(--terra); letter-spacing: -0.03em; }
+  .stat-l { font-size: 0.75rem; color: #8C7F76; font-weight: 500; max-width: 130px; line-height: 1.4; }
+  .hdiv { border-right: 1px solid var(--bege); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+  /* DOR */
+  #dor { padding: 7rem 5%; background: var(--graphite); position: relative; overflow: hidden; }
+  #dor::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, rgba(255,255,255,0.014) 0px, rgba(255,255,255,0.014) 1px, transparent 1px, transparent 28px); pointer-events: none; }
+  .dor-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .kicker { font-size: 0.73rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--terra); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .kicker::before { content: ''; width: 22px; height: 2px; background: var(--terra); border-radius: 2px; flex-shrink: 0; }
+  .dor-title { font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; color: var(--white); line-height: 1.15; max-width: 640px; margin-bottom: 0.85rem; }
+  .dor-title span { color: var(--terra); }
+  .dor-sub { font-size: 0.95rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 490px; margin-bottom: 3rem; }
+  .dor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .dor-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 18px; padding: 1.65rem; transition: all 0.3s ease; }
+  .dor-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(198,90,58,0.22); transform: translateY(-4px); }
+  .dor-icon { font-size: 1.4rem; margin-bottom: 0.9rem; display: block; }
+  .dor-ct { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.45rem; }
+  .dor-cx { font-size: 0.83rem; color: rgba(255,255,255,0.42); line-height: 1.7; }
+  .virada { margin-top: 3rem; padding: 2.25rem 2.5rem; background: var(--terra); border-radius: 18px; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .virada-txt { font-size: clamp(1rem, 1.8vw, 1.3rem); font-weight: 700; color: var(--white); line-height: 1.45; }
+  .virada-label { font-size: 0.75rem; font-weight: 400; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.35rem; }
+  .btn-virada { background: var(--white); color: var(--terra); padding: 0.82rem 1.65rem; border-radius: 100px; font-size: 0.88rem; font-weight: 800; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-virada:hover { background: var(--offwhite); transform: scale(1.03); }
+
+  /* SOBRE */
+  #sobre { padding: 7rem 5%; background: var(--offwhite); }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .sobre-title { font-size: clamp(1.9rem, 3.2vw, 2.55rem); font-weight: 800; line-height: 1.18; letter-spacing: -0.03em; color: var(--graphite); margin-bottom: 1.1rem; }
+  .sobre-title span { color: var(--terra); }
+  .sobre-txt { font-size: 0.97rem; color: #6B6057; line-height: 1.9; }
+  .sobre-cards { display: flex; flex-direction: column; gap: 0.9rem; }
+  .sc { background: var(--white); border: 1px solid rgba(198,90,58,0.08); border-radius: 16px; padding: 1.35rem; display: flex; gap: 1rem; align-items: flex-start; transition: all 0.25s ease; }
+  .sc:hover { border-color: rgba(198,90,58,0.2); transform: translateX(5px); box-shadow: 0 6px 24px rgba(198,90,58,0.06); }
+  .sc-icon { width: 40px; height: 40px; border-radius: 11px; background: var(--terra-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .sc-title { font-size: 0.9rem; font-weight: 700; color: var(--graphite); margin-bottom: 0.2rem; }
+  .sc-text { font-size: 0.82rem; color: #8C7F76; line-height: 1.6; }
+
+  /* COMO FUNCIONA */
+  #como-funciona { padding: 7rem 5%; background: var(--sand); }
+  .sec-header { text-align: center; max-width: 560px; margin: 0 auto 4.5rem; }
+  .sec-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; color: var(--graphite); line-height: 1.2; margin-bottom: 0.7rem; }
+  .sec-title span { color: var(--terra); }
+  .sec-sub { font-size: 0.93rem; color: #7A6F66; line-height: 1.78; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; max-width: 1000px; margin: 0 auto; position: relative; }
+  .steps::before { content: ''; position: absolute; top: 36px; left: 16%; right: 16%; height: 1px; background: repeating-linear-gradient(90deg, var(--bege) 0, var(--bege) 8px, transparent 8px, transparent 16px); }
+  .step { background: var(--white); border-radius: 20px; padding: 1.9rem 1.65rem; border: 1px solid rgba(198,90,58,0.08); transition: all 0.3s ease; }
+  .step:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(198,90,58,0.09); border-color: rgba(198,90,58,0.18); }
+  .step-n { width: 46px; height: 46px; border-radius: 50%; background: var(--terra); color: var(--white); font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.4rem; }
+  .step-t { font-size: 1rem; font-weight: 700; color: var(--graphite); margin-bottom: 0.55rem; }
+  .step-x { font-size: 0.86rem; color: #8C7F76; line-height: 1.7; }
+
+  /* PORTFOLIO */
+  #portfolio { padding: 7rem 5%; background: var(--offwhite); }
+  .port-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.15rem; max-width: 1100px; margin: 0 auto; }
+  .pc { border-radius: 18px; overflow: hidden; border: 1px solid rgba(198,90,58,0.1); background: var(--white); transition: all 0.3s ease; cursor: pointer; display:block; }
+  .pc:hover img { transform: scale(1.04); }
+  .pc:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(43,43,43,0.11); }
+  .pc:first-child { grid-column: span 2; }
+  .pc-img { width: 100%; background: var(--sand-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; height: 200px; }
+  .pc:first-child .pc-img { height: 255px; }
+  .pm { width: 85%; height: 82%; background: var(--offwhite); border-radius: 7px 7px 0 0; border: 1px solid var(--bege); position: absolute; bottom: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .pm-bar { height: 20px; background: var(--graphite); display: flex; align-items: center; padding: 0 9px; gap: 5px; flex-shrink: 0; }
+  .pm-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .pm-body { flex: 1; padding: 9px; display: flex; flex-direction: column; gap: 5px; }
+  .pm-hero { height: 44%; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+  .pm-ht { font-size: 6.5px; font-weight: 800; color: rgba(255,255,255,0.9); text-align: center; line-height: 1.3; }
+  .pm-line { height: 5px; border-radius: 3px; background: var(--bege); }
+  .pm-line.short { width: 58%; }
+  .pm-line.acc { background: var(--terra); width: 38%; }
+  .pc-info { padding: 1.15rem 1.4rem; }
+  .pc-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.35rem; }
+  .pc-name { font-size: 0.97rem; font-weight: 700; color: var(--graphite); }
+  .pc-desc { font-size: 0.8rem; color: #8C7F76; margin-top: 0.28rem; line-height: 1.5; }
+  .port-cta { text-align: center; margin-top: 3rem; }
+
+  /* DIFERENCIAIS */
+  #diferenciais { padding: 7rem 5%; background: var(--graphite); position: relative; overflow: hidden; }
+  #diferenciais::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, rgba(255,255,255,0.014) 0px, rgba(255,255,255,0.014) 1px, transparent 1px, transparent 28px); pointer-events: none; }
+  #diferenciais .sec-title { color: var(--white); }
+  #diferenciais .sec-sub { color: rgba(255,255,255,0.38); }
+  .dif-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; max-width: 900px; margin: 0 auto; }
+  .dif { border-radius: 18px; padding: 1.85rem; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.04); display: flex; gap: 1.15rem; align-items: flex-start; transition: all 0.3s ease; }
+  .dif:hover { background: rgba(255,255,255,0.08); border-color: rgba(111,167,162,0.22); transform: translateY(-4px); }
+  .dif.dest { grid-column: span 2; background: var(--terra); border-color: var(--terra); flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .dif.dest:hover { background: var(--terra-dark); transform: translateY(-3px); }
+  .dif-icon { width: 48px; height: 48px; border-radius: 13px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+  .dif-t { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+  .dif-x { font-size: 0.84rem; color: rgba(255,255,255,0.48); line-height: 1.7; }
+  .dif.dest .dif-x { color: rgba(255,255,255,0.72); }
+  .dif-body { flex: 1; min-width: 220px; }
+
+  /* CONTATO */
+  #contato { padding: 7rem 5%; background: var(--sand); position: relative; overflow: hidden; }
+  #contato::after { content: ''; position: absolute; bottom: -10%; right: -5%; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(198,90,58,0.07) 0%, transparent 65%); border-radius: 50%; pointer-events: none; }
+
+  /* FOOTER */
+  footer { background: var(--graphite); padding: 2.4rem 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .fl { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .fl-t { font-size: 0.97rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
+  .ft { font-size: 0.78rem; color: rgba(255,255,255,0.28); }
+  .ftag { font-size: 0.75rem; color: rgba(255,255,255,0.2); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* WPP */
+  .wpp { position: fixed; bottom: 2rem; right: 2rem; background: #25D366; color: var(--white); width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 8px 24px rgba(37,211,102,0.38); z-index: 99; transition: all 0.25s ease; }
+  .wpp:hover { transform: scale(1.1); box-shadow: 0 12px 30px rgba(37,211,102,0.48); }
+
+  /* CONTATO WPP */
+  .cont-inner { max-width: 620px; margin: 0 auto; text-align: center; position: relative; }
+  .cont-txt { font-size: 0.97rem; color: #7A6F66; line-height: 1.85; margin-bottom: 2rem; max-width: 460px; margin-left: auto; margin-right: auto; }
+  .cont-btns { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .cont-btns-secondary { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .btn-insta { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--graphite); padding: 0.7rem 1.6rem; border-radius: 100px; font-size: 0.88rem; font-weight: 700; text-decoration: none; border: 1.5px solid var(--bege); transition: all 0.25s ease; }
+  .btn-insta:hover { border-color: var(--terra); color: var(--terra); transform: translateY(-2px); }
+  .btn-email { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--graphite); padding: 0.7rem 1.6rem; border-radius: 100px; font-size: 0.88rem; font-weight: 700; text-decoration: none; border: 1.5px solid var(--bege); transition: all 0.25s ease; }
+  .btn-email:hover { border-color: var(--terra); color: var(--terra); transform: translateY(-2px); }
+  .btn-wpp-main { display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: var(--white); padding: 1rem 2.2rem; border-radius: 100px; font-size: 1rem; font-weight: 700; text-decoration: none; box-shadow: 0 8px 28px rgba(37,211,102,0.35); transition: all 0.25s ease; margin-bottom: 1.75rem; }
+  .btn-wpp-main:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 12px 36px rgba(37,211,102,0.45); }
+  .cont-details { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; font-size: 0.83rem; color: #8C7F76; font-weight: 500; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-logo-side { order: 2; display: flex; justify-content: center; }
+    .hero-logo-img { max-width: 200px; margin: 0 auto; }
+    .hero-content-side { order: 1; }
+    .nav-links { display: none; }
+    .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .steps, .dor-grid, .dif-grid { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+    .dif.dest { grid-column: span 1; }
+    .port-grid { grid-template-columns: 1fr; }
+    .pc:first-child { grid-column: span 1; }
+    .hero-stats { gap: 1.5rem; }
+    .virada { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="nav-logo">
+    <!-- Substitua pelo caminho da sua logo PNG -->
+    <img src="image/logo.png" alt="Vitrino" style="height:36px;width:auto;object-fit:contain;"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="https://wa.me/5541920010085?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Vitrino%20e%20quero%20saber%20como%20fica%20a%20presen%C3%A7a%20digital%20do%20meu%20neg%C3%B3cio.%20%F0%9F%98%8A" target="_blank" class="nav-cta">Falar com a gente</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-blob1"></div>
+  <div class="hero-blob2"></div>
+
+  <div class="hero-inner">
+
+    <!-- LADO ESQUERDO — Conteúdo -->
+    <div class="hero-content-side">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        Seu negócio na vitrine certa
+      </div>
+
+      <h1 class="hero-title">
+        Seu negócio existe.<br>Mas ele aparece<br><span>pra quem importa?</span>
+      </h1>
+
+      <p class="hero-sub">
+        Quando alguém procura o que você oferece, a primeira impressão já decidiu tudo. A Vitrino cria a vitrine digital do seu negócio — profissional, personalizada e do jeito que você merece ser visto.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/5541920010085?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Vitrino%20e%20quero%20saber%20como%20fica%20a%20presen%C3%A7a%20digital%20do%20meu%20neg%C3%B3cio.%20%F0%9F%98%8A" target="_blank" class="btn-p">
+          Quero aparecer agora
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#dor" class="btn-s">
+          Entender o problema
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-n">97%</span>
+          <span class="stat-l">dos clientes pesquisam online antes de comprar</span>
+        </div>
+        <div class="hdiv"></div>
+        <div class="stat">
+          <span class="stat-n">3 seg</span>
+          <span class="stat-l">pra causar uma boa primeira impressão</span>
+        </div>
+        <div class="hdiv"></div>
+        <div class="stat">
+          <span class="stat-n">Zero</span>
+          <span class="stat-l">mensalidade. Você paga uma vez.</span>
+        </div>
+      </div>
+    </div><!-- fim hero-content-side -->
+
+    <!-- LADO DIREITO — Logo grande -->
+    <div class="hero-logo-side">
+      <!-- Substitua pelo caminho da sua logo PNG -->
+      <img src="imagens/logo2.png" alt="Vitrino" class="hero-logo-img"/>
+    </div>
+
+  </div><!-- fim hero-inner -->
+</section>
+
+<!-- DOR -->
+<section id="dor">
+  <div class="dor-inner">
+    <div class="kicker" style="color:var(--terra);">O que está em jogo</div>
+    <h2 class="dor-title">Sem presença digital, seu negócio perde clientes todo dia — <span>sem nem saber.</span></h2>
+    <p class="dor-sub">Não é exagero. É o que acontece enquanto você foca em atender bem quem já chegou, e deixa escapar quem nem te encontrou.</p>
+
+    <div class="dor-grid">
+      <div class="dor-card">
+        <span class="dor-icon">🔍</span>
+        <div class="dor-ct">Você não aparece no Google</div>
+        <div class="dor-cx">Quando alguém pesquisa "clínica veterinária perto de mim", seu concorrente aparece. Você não. Esse cliente foi embora sem te conhecer.</div>
+      </div>
+      <div class="dor-card">
+        <span class="dor-icon">📲</span>
+        <div class="dor-ct">Instagram e site se complementam — um não substitui o outro</div>
+        <div class="dor-cx">Seu Instagram pode ser incrível. Mas quem te busca no Google não chega lá. Um endereço fixo na internet garante que você seja encontrado em qualquer lugar.</div>
+      </div>
+      <div class="dor-card">
+        <span class="dor-icon">🤔</span>
+        <div class="dor-ct">Falta de credibilidade na primeira impressão</div>
+        <div class="dor-cx">Negócio sem presença profissional passa insegurança. O cliente compara você com quem tem — e escolhe o outro, mesmo que você seja melhor.</div>
+      </div>
+      <div class="dor-card">
+        <span class="dor-icon">📞</span>
+        <div class="dor-ct">Informações espalhadas em todo lugar</div>
+        <div class="dor-cx">Horário no Instagram, telefone no Google, endereço desatualizado no Maps. O cliente se perde e desiste antes de entrar em contato.</div>
+      </div>
+      <div class="dor-card">
+        <span class="dor-icon">💸</span>
+        <div class="dor-ct">Dependência total de indicação</div>
+        <div class="dor-cx">Indicação é ótima, mas é limitada. Sem presença digital, você depende de quem já te conhece — e trava o crescimento do seu negócio.</div>
+      </div>
+      <div class="dor-card">
+        <span class="dor-icon">📉</span>
+        <div class="dor-ct">Seu concorrente já saiu na frente</div>
+        <div class="dor-cx">Enquanto você adia, outros negócios da sua região já estão aparecendo, gerando confiança e captando clientes que deveriam ser seus.</div>
+      </div>
+    </div>
+
+    <div class="virada">
+      <div class="virada-txt">
+        <span class="virada-label">A virada começa aqui</span>
+        A Vitrino transforma tudo isso em presença digital real — profissional, personalizada e pronta pra atrair clientes de verdade.
+      </div>
+      <a href="#sobre" class="btn-virada">
+        Conhecer a Vitrino
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sobre-grid">
+    <div>
+      <div class="kicker">Sobre a Vitrino</div>
+      <h2 class="sobre-title">Fazemos seu negócio<br><span>parecer tão bom</span><br>quanto ele é.</h2>
+      <p class="sobre-txt">
+        A Vitrino é especializada em presença digital para pequenos negócios locais. Entendemos que você não precisa de tecnologia — você precisa de clientes.<br><br>
+        Por isso chegamos até você com tudo pronto: presença digital completa, personalizada pra sua marca, seus clientes, sua cidade. Você aprova. A gente publica.
+      </p>
+    </div>
+    <div class="sobre-cards">
+      <div class="sc">
+        <div class="sc-icon">🎯</div>
+        <div>
+          <div class="sc-title">Feito sob medida, nunca genérico</div>
+          <div class="sc-text">Estudamos quem você é antes de criar qualquer coisa. Cada presença digital reflete a identidade real do negócio.</div>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">⚡</div>
+        <div>
+          <div class="sc-title">Rápido, sem burocracia</div>
+          <div class="sc-text">Sem reuniões longas. Tudo resolvido pelo WhatsApp. Sua presença digital no ar em dias, não em meses.</div>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">📍</div>
+        <div>
+          <div class="sc-title">Você aparece onde o cliente procura</div>
+          <div class="sc-text">Presença digital + Google Meu Negócio configurado. Seu negócio no Maps, nas buscas, no lugar certo.</div>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">🔑</div>
+        <div>
+          <div class="sc-title">A conta é sempre sua</div>
+          <div class="sc-text">Criamos tudo no seu nome, com o seu e-mail. Sem dependência, sem mensalidade. O que é seu, fica seu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="sec-header">
+    <div class="kicker" style="justify-content:center;">Como funciona</div>
+    <h2 class="sec-title">Três passos.<br><span>Sem complicação.</span></h2>
+    <p class="sec-sub">Sem formulários complicados, sem reuniões intermináveis. Você vê tudo pronto antes de qualquer decisão.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-t">A gente te mostra como vai ficar</div>
+      <div class="step-x">Chegamos até você com sua presença digital já criada e personalizada. Você vê tudo antes de decidir qualquer coisa.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-t">Você aprova ou pede ajustes</div>
+      <div class="step-x">Gostou? Ótimo. Quer mudar algo? A gente afina. Rápido e direto pelo WhatsApp. Sem complicação.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-t">Publicamos e seu negócio aparece</div>
+      <div class="step-x">Sua presença vai ao ar — na sua conta, no seu nome. Google Meu Negócio configurado. Tudo pronto pra atrair clientes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="sec-header">
+    <div class="kicker" style="justify-content:center;">Portfólio</div>
+    <h2 class="sec-title">Presenças digitais que<br><span>trabalham por você.</span></h2>
+    <p class="sec-sub">Cada projeto é único — criado pra refletir a identidade e os valores de cada negócio.</p>
+  </div>
+  <div class="port-grid">
+    <!-- PORTFÓLIO 1 — Substitua: href pela URL do site, src pela imagem do projeto -->
+    <a class="pc" href="URL_SITE_CLIENTE_1" target="_blank" style="text-decoration:none;cursor:pointer;">
+      <div class="pc-img" style="overflow:hidden;">
+        <img src="imagens/cliente-1.jpg" alt="Cliente 1" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;"/>
+      </div>
+      <div class="pc-info">
+        <div class="pc-tag">Clínica Veterinária</div>
+        <div class="pc-name">Nome do Cliente</div>
+        <div class="pc-desc">Presença digital completa com agendamento via WhatsApp e Google Meu Negócio.</div>
+      </div>
+    </a>
+    <!-- PORTFÓLIO 2 — Substitua: href pela URL do site, src pela imagem do projeto -->
+    <a class="pc" href="URL_SITE_CLIENTE_2" target="_blank" style="text-decoration:none;cursor:pointer;">
+      <div class="pc-img" style="overflow:hidden;">
+        <img src="imagens/cliente-2.jpg" alt="Cliente 2" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;"/>
+      </div>
+      <div class="pc-info">
+        <div class="pc-tag">Segmento</div>
+        <div class="pc-name">Nome do Cliente</div>
+        <div class="pc-desc">Identidade forte, agendamento fácil e presença consolidada no Google Maps.</div>
+      </div>
+    </a>
+    <!-- PORTFÓLIO 3 — Substitua: href pela URL do site, src pela imagem do projeto -->
+    <a class="pc" href="URL_SITE_CLIENTE_3" target="_blank" style="text-decoration:none;cursor:pointer;">
+      <div class="pc-img" style="overflow:hidden;">
+        <img src="imagens/cliente-3.jpg" alt="Cliente 3" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;"/>
+      </div>
+      <div class="pc-info">
+        <div class="pc-tag">Segmento</div>
+        <div class="pc-name">Nome do Cliente</div>
+        <div class="pc-desc">Cardápio, localização e contato num só lugar — acessível por qualquer cliente.</div>
+      </div>
+    </a>
+    <!-- PORTFÓLIO 4 — Substitua: href pela URL do site, src pela imagem do projeto -->
+    <a class="pc" href="URL_SITE_CLIENTE_4" target="_blank" style="text-decoration:none;cursor:pointer;">
+      <div class="pc-img" style="overflow:hidden;">
+        <img src="imagens/cliente-4.jpg" alt="Cliente 4" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;"/>
+      </div>
+      <div class="pc-info">
+        <div class="pc-tag">Segmento</div>
+        <div class="pc-name">Nome do Cliente</div>
+        <div class="pc-desc">Planos, horários e diferenciais apresentados com clareza pra quem busca no Google.</div>
+      </div>
+    </a>
+  </div>
+  <div class="port-cta">
+    <a href="https://wa.me/5541920010085?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Vitrino%20e%20quero%20saber%20como%20fica%20a%20presen%C3%A7a%20digital%20do%20meu%20neg%C3%B3cio.%20%F0%9F%98%8A" target="_blank" class="btn-p" style="display:inline-flex;">
+      Falar com a Vitrino
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="diferenciais">
+  <div class="sec-header" style="position:relative;">
+    <div class="kicker" style="justify-content:center; color:var(--terra);">Por que a Vitrino</div>
+    <h2 class="sec-title">O que faz a <span>Vitrino</span><br>ser diferente.</h2>
+    <p class="sec-sub">Não é só uma página na internet. É presença digital pensada pra gerar resultado no mundo real.</p>
+  </div>
+  <div class="dif-grid">
+    <div class="dif">
+      <div class="dif-icon">👁️</div>
+      <div>
+        <div class="dif-t">Você vê antes de pagar</div>
+        <div class="dif-x">Chegamos com sua presença digital já montada e personalizada. Nenhuma surpresa, nenhum risco. Você decide com o resultado na mão.</div>
+      </div>
+    </div>
+    <div class="dif">
+      <div class="dif-icon">🎨</div>
+      <div>
+        <div class="dif-t">100% personalizado, nunca genérico</div>
+        <div class="dif-x">Nada de template padrão. Cada presença digital é criada respeitando as cores, a identidade e a personalidade do seu negócio.</div>
+      </div>
+    </div>
+    <div class="dif">
+      <div class="dif-icon">📦</div>
+      <div>
+        <div class="dif-t">Entrega completa, tudo no ar</div>
+        <div class="dif-x">Presença digital + Google Meu Negócio + WhatsApp + redes sociais integrados. Tudo configurado. Você não precisa fazer nada.</div>
+      </div>
+    </div>
+    <div class="dif">
+      <div class="dif-icon">🔑</div>
+      <div>
+        <div class="dif-t">Sem dependência, sem mensalidade</div>
+        <div class="dif-x">Criamos tudo na sua conta, com o seu e-mail. O que você contrata, você possui. Para sempre. Sem renovação, sem armadilha.</div>
+      </div>
+    </div>
+    <div class="dif dest">
+      <div class="dif-icon">🚀</div>
+      <div class="dif-body">
+        <div class="dif-t">Do zero ao ar em até 5 dias</div>
+        <div class="dif-x">Sem reuniões longas, sem processos complicados. Você foca no que sabe fazer — a gente cuida da sua vitrine digital com agilidade e cuidado.</div>
+      </div>
+      <a href="https://wa.me/5541920010085?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Vitrino%20e%20quero%20saber%20como%20fica%20a%20presen%C3%A7a%20digital%20do%20meu%20neg%C3%B3cio.%20%F0%9F%98%8A" target="_blank" class="btn-virada">
+        Começar agora
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="cont-inner">
+    <div class="kicker" style="justify-content:center;">Fale com a gente</div>
+    <h2 class="cont-title">Pronto pra colocar seu negócio<br><span>na vitrine?</span></h2>
+    <p class="cont-txt">
+      A conversa começa pelo WhatsApp. Sem formulário, sem espera. Manda uma mensagem e a gente responde.
+    </p>
+    <div class="cont-btns">
+      <a href="https://wa.me/5541920010085?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Vitrino%20e%20quero%20saber%20como%20fica%20a%20presen%C3%A7a%20digital%20do%20meu%20neg%C3%B3cio.%20%F0%9F%98%8A" class="btn-wpp-main" target="_blank">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Chamar no WhatsApp
+      </a>
+      <div class="cont-btns-secondary">
+      <a href="https://instagram.com/vitrinodigital" target="_blank" class="btn-insta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        @vitrinodigital
+      </a>
+      <a href="mailto:vitrinopresencadigital@gmail.com" class="btn-email">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        vitrinopresencadigital@gmail.com
+      </a>
+      </div>
+    </div>
+    <div class="cont-details">
+      <span>📲 (41) 92001-0085</span>
+      <span>·</span>
+      <span>⚡ Resposta rápida</span>
+      <span>·</span>
+      <span>🎯 Você vê antes de pagar</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#inicio" class="fl">
+    <!-- Substitua pelo caminho da sua logo PNG -->
+    <img src="imagens/logo.png" alt="Vitrino" style="height:28px;width:auto;object-fit:contain;filter:brightness(10);"/>
+  </a>
+  <span class="ftag">Presença digital. Negócios em destaque.</span>
+  <a href="https://instagram.com/vitrinodigital" target="_blank" style="font-size:0.78rem;color:rgba(255,255,255,0.35);text-decoration:none;font-weight:500;">@vitrinodigital</a>
+  <a href="mailto:vitrinopresencadigital@gmail.com" style="font-size:0.78rem;color:rgba(255,255,255,0.28);text-decoration:none;font-weight:500;">vitrinopresencadigital@gmail.com</a>
+  <span class="ft">© 2026 Vitrino. Todos os direitos reservados.</span>
+</footer>
+
+<!-- WPP -->
+<a href="https://wa.me/5541920010085" class="wpp" target="_blank" title="Falar no WhatsApp">
+  <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+</body>
+</html>
